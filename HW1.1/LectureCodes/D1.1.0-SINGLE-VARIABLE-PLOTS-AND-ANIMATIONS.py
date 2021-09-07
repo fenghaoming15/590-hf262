@@ -290,5 +290,5 @@ exit()
 # plt.show()
 # # anim.save(animation_type + '.gif', writer='imagemagick')
 # exit()
-
+# I HAVE WORKED THROUGH THIS EXAMPLE AND UNDERSTAND IT COMPLETELY
 
