@@ -58,3 +58,4 @@ class SmallDog(Dog):
 B = SmallDog(['Bo' ,15])
 B.update(1)
 print(B.name, B.weight, B.kind, B.possesions,B.size,"H=",B.height)
+# I HAVE WORKED THROUGH THIS EXAMPLE AND UNDERSTAND IT COMPLETELY
