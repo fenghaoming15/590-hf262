@@ -74,4 +74,4 @@ while(t<=tmax):
 	xi=xip1 
 
 plt.show(); #exit()
-
+# I HAVE WORKED THROUGH THIS EXAMPLE AND UNDERSTAND EVERYTHING THAT IT IS DOING

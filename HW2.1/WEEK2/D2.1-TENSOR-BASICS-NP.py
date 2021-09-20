@@ -97,5 +97,6 @@ get_info(x+x[0,:], "ADD FIRST ROW TO EACH ROW")
 get_info(x.reshape(x.shape[0]*x.shape[1],1), "x.reshape(x.shape[0]*x.shape[1],1)")
 get_info(x.reshape(1,x.shape[0]*x.shape[1]), "x.reshape(1,x.shape[0]*x.shape[1])")
 get_info(x.reshape(int(x.shape[0]*x.shape[1]/2),2), "x.reshape(int(x.shape[0]*x.shape[1]/2),2)")
+# I HAVE WORKED THROUGH THIS EXAMPLE AND UNDERSTAND EVERYTHING THAT IT IS DOING
 
 

@@ -199,4 +199,4 @@ for i in range(0,len(x)):
 	plt.pause(dt)
 
 plt.show()
-
+# I HAVE WORKED THROUGH THIS EXAMPLE AND UNDERSTAND EVERYTHING THAT IT IS DOING
