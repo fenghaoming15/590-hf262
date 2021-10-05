@@ -11,20 +11,31 @@ import json
 #CODE PARAMETERS
 #------------------------
 
-#USER PARAMETERS
-IPLOT=True
-I_NORMALIZE=True;
-PARADIGM='mini_batch'
-dx=0.0001			#STEP SIZE FOR FINITE DIFFERENCE
-max_iter=2000		#MAX NUMBER OF ITERATION
-tol=10**-10			#EXIT AFTER CHANGE IN F IS LESS THAN THIS 
-alpha=0.5  			#EXPONENTIAL DECAY FACTOR FOR MOMENTUM ALGO
-algo='MOM'
+#MISC PARAMETERS
+IPLOT		=	True
+I_NORMALIZE =	True;
+# model_type 	=	"linear";  
+# model_type 	=	"logistic";  	 
+model_type 	=	"ANN";  		
 
-model_type="linear";  LR=0.01  #LEARNING RATE 
+#OPTIMIZATION PARAM
+PARADIGM 	=	'batch'
+algo 		=	"MOM"	#GD OR MOM
+LR 			=	0.1  	#LEARNING RATE
+dx 			=	0.0001	#STEP SIZE FOR FINITE DIFFERENCE
+max_iter 	=	2000	#MAX NUMBER OF ITERATION
+tol 		= 	10**-10	#EXIT AFTER CHANGE IN LOSS IS LESS THAN THIS 
+max_rand_wb	=	1.0 	#MAX FOR RANDOM INITIAL GUESS
+GAMMA_L1	=	0.0		#L1 REGULARIZATION CONSTANT
+GAMMA_L2	=	0.01	#L2 REGULARIZATION CONSTANT
+alpha		=	0.25	#MOMENTUM PARAMETER
+#ANN PARAM
+layers		=	['overwrite',5,5,1] #FIRST NUMBER OVERWRITTEN LATER BY INPUT SHAPE
+activation	=	"TANH"	#SIGMOID OR TAHN
 
 #SAVE HISTORY FOR PLOTTING AT THE END
 epoch=1; epochs=[]; loss_train=[];  loss_val=[]
+
 
 #------------------------
 #GET DATA 
@@ -115,6 +126,30 @@ print("train_idx shape:",train_idx.shape)
 print("val_idx shape:"  ,val_idx.shape)
 print("test_idx shape:" ,test_idx.shape)
 
+
+def extract_submatrices(WB):
+	submatrices=[]; K=0
+	for i in range(0,len(layers)-1):
+		#FORM RELEVANT SUB MATRIX FOR LAYER-N
+		Nrow=layers[i+1]; Ncol=layers[i] #+1
+		w=np.array(WB[K:K+Nrow*Ncol].reshape(Ncol,Nrow).T) #unpack/ W 
+		K=K+Nrow*Ncol; #print i,k0,K
+		Nrow=layers[i+1]; Ncol=1; #+1
+		b=np.transpose(np.array([WB[K:K+Nrow*Ncol]])) #unpack/ W 
+		K=K+Nrow*Ncol; #print i,k0,K
+		submatrices.append(w); submatrices.append(b)
+		#print(w.shape,b.shape)
+	return submatrices
+
+if(model_type=="ANN"):
+	layers[0]		=	 X.shape[1]  	#OVERWRITE WITH INPUT SIZE
+
+	#CALCULATE NUMBER OF FITTING PARAMETERS FOR SPECIFIED NN 
+	NFIT=0; 
+	for i in range(1,len(layers)):  
+		NFIT=NFIT+layers[i-1]*layers[i]+layers[i]
+	print("NFIT		:	",NFIT)
+    
 #------------------------
 #MODEL
 #------------------------
@@ -124,6 +159,9 @@ def model(x,p):
 		if(model_type=="logistic"): out=S(out)
 		return  out  
 
+	if(model_type=="ANN"):
+		submatrices=extract_submatrices(p)
+		return  NN_eval(x,submatrices)
 
 #FUNCTION TO MAKE VARIOUS PREDICTIONS FOR GIVEN PARAMETERIZATION
 def predict(p):
@@ -137,10 +175,15 @@ def predict(p):
 #------------------------
 #LOSS FUNCTION
 #------------------------
+
 def loss(p,index_2_use):
 	errors=model(X[index_2_use],p)-Y[index_2_use]  #VECTOR OF ERRORS
-	training_loss=np.mean(errors**2.0)				#MSE
-	return training_loss
+	out=np.mean(errors**2.0)				#MSE
+	if(GAMMA_L1!=0.0):
+		out=out+GAMMA_L1*np.sum(np.absolute(p))
+	if(GAMMA_L2!=0.0):
+		out=out+GAMMA_L2*np.sum(p**2.0)
+	return out
 
 #------------------------
 #MINIMIZER FUNCTION
