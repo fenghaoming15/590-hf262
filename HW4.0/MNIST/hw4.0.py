@@ -157,14 +157,28 @@ if DFF_ANN == True:
         fold_no += 1
     print("average accuracy = ", np.mean(acc_per_fold))
     print("average loss = ", np.mean(loss_per_fold))
+
+
+#------------------Plot our accuracy and loss ----------------
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['loss'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
+plt.title('model results training history')
+plt.ylabel('accuracy/loss')
 plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
+plt.legend(['Acuuracy', 'Loss'], loc='upper left')
 plt.show()
-    
+
+
+#------------------Save our model------------------------------
+def save_model(model,name_of_model = "ourmodel"):
+    model.save(name_of_model)
+
+#------------------Load our model------------------------------
+def load_model(path):
+    model = keras.models.load_model(path)
+    return model
+
+
 #-------------------------------------
 #EVALUATE ON TEST DATA
 #-------------------------------------
