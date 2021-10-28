@@ -116,12 +116,14 @@ plt.plot(epochs, acc, 'bo', label='Training acc')
 plt.plot(epochs, val_acc, 'b', label='Validation acc')
 plt.title('Training and validation accuracy')
 plt.legend()
+plt.savefig("training and validation accuracy")
+
 plt.figure()
 plt.plot(epochs, loss, 'bo', label='Training loss')
 plt.plot(epochs, val_loss, 'b', label='Validation loss')
-plt.title('Training and validation loss')
+plt.title('Training and validation accuracy')
 plt.legend()
-plt.show()
+plt.savefig("Training and validation loss")
 
 
 
