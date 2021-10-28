@@ -86,12 +86,13 @@ y_val = to_categorical(y_val, 3)
 
 from keras.models import Sequential
 from keras.layers import Embedding, Flatten, Dense,SimpleRNN, LSTM
+from tensorflow.keras import regularizers
 
 embedding_dim = 100
 
 model = Sequential()
 model.add(Embedding(max_words, 32)) 
-model.add(LSTM(32))
+model.add(LSTM(32,kernel_regularizer=regularizers.l1_l2(0.01,0.01)))
 model.add(Dense(3, activation='softmax'))
 
 model.summary()
@@ -101,7 +102,7 @@ model.compile(optimizer='rmsprop',
               metrics=['acc'])
 
 history = model.fit(x_train, y_train,
-                    epochs=10,
+                    epochs=20,
                     batch_size=32,
                     validation_data=(x_val, y_val))
 
@@ -121,7 +122,7 @@ plt.savefig("training and validation accuracy")
 plt.figure()
 plt.plot(epochs, loss, 'bo', label='Training loss')
 plt.plot(epochs, val_loss, 'b', label='Validation loss')
-plt.title('Training and validation accuracy')
+plt.title('Training and validation loss')
 plt.legend()
 plt.savefig("Training and validation loss")
 
