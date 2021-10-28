@@ -90,6 +90,8 @@ print('--------INPUT INFO-----------')
 print("X shape:",X.shape); print("Y shape:",Y.shape,'\n')
 
 
+'''
+
 #------------------------
 #PARTITION DATA
 #------------------------
@@ -281,4 +283,4 @@ if(IPLOT):
 # print(np.matmul(A,x))
 # print(np.matmul(A,B))
 # print(B.reshape(6,1))
-# print(B.reshape(1,6))
+# print(B.reshape(1,6))'''
