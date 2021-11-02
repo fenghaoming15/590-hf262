@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct 28 09:42:49 2021
+Created on Tue Nov  2 11:57:18 2021
 
 @author: haomingfeng
 """
-
-
+from tensorflow import keras
 import os
 from tensorflow.keras.preprocessing.text import Tokenizer
 from sklearn.metrics import roc_curve,roc_auc_score
@@ -16,6 +15,10 @@ from tensorflow.keras.utils import to_categorical
 import matplotlib.pyplot as plt
 import numpy as np
 import nltk
+
+model = keras.models.load_model('novel_classification_model')
+
+model.summary()
 
 dir = "/Users/haomingfeng/590-hf262/HW5.0/Data"
 
@@ -85,67 +88,4 @@ y_val = labels[training_samples:training_samples + validation_samples]
 y_train = to_categorical(y_train, 3)
 y_val = to_categorical(y_val, 3)
 
-
-from keras.models import Sequential
-from keras.layers import Embedding, Flatten, Dense,SimpleRNN, LSTM
-from tensorflow.keras import regularizers
-
-embedding_dim = 100
-
-model = Sequential()
-model.add(Embedding(max_words, 32)) 
-model.add(LSTM(32,kernel_regularizer=regularizers.l1_l2(0.01,0.01)))
-model.add(Dense(3, activation='softmax'))
-
-model.summary()
-
-model.compile(optimizer='rmsprop',
-              loss='categorical_crossentropy',
-              metrics=['acc'])
-
-model.save('novel_classification_model')
-
-history = model.fit(x_train, y_train,
-                    epochs=20,
-                    batch_size=32,
-                    validation_data=(x_val, y_val))
-
-acc = history.history['acc']
-val_acc = history.history['val_acc']
-loss = history.history['loss']
-val_loss = history.history['val_loss']
-epochs = range(1, len(acc) + 1)
-plt.plot(epochs, acc, 'bo', label='Training acc')
-plt.plot(epochs, val_acc, 'b', label='Validation acc')
-plt.title('Training and validation accuracy')
-plt.legend()
-plt.savefig("training and validation accuracy")
-
-plt.figure()
-plt.plot(epochs, loss, 'bo', label='Training loss')
-plt.plot(epochs, val_loss, 'b', label='Validation loss')
-plt.title('Training and validation loss')
-plt.legend()
-plt.savefig("Training and validation loss")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+model.evaluate(x_train,y_train)
