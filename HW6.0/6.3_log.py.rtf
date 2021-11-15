@@ -1,0 +1,52 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Model: "model"\
+_________________________________________________________________\
+Layer (type)                 Output Shape              Param #   \
+=================================================================\
+input_1 (InputLayer)         [(None, 32, 32, 3)]       0         \
+_________________________________________________________________\
+conv2d (Conv2D)              (None, 32, 32, 32)        896       \
+_________________________________________________________________\
+max_pooling2d (MaxPooling2D) (None, 16, 16, 32)        0         \
+_________________________________________________________________\
+conv2d_1 (Conv2D)            (None, 16, 16, 32)        9248      \
+_________________________________________________________________\
+max_pooling2d_1 (MaxPooling2 (None, 8, 8, 32)          0         \
+_________________________________________________________________\
+conv2d_transpose (Conv2DTran (None, 16, 16, 32)        9248      \
+_________________________________________________________________\
+conv2d_transpose_1 (Conv2DTr (None, 32, 32, 32)        9248      \
+_________________________________________________________________\
+conv2d_2 (Conv2D)            (None, 32, 32, 1)         289       \
+=================================================================\
+Total params: 28,929\
+Trainable params: 28,929\
+Non-trainable params: 0\
+_________________________________________________________________\
+2021-11-15 00:53:56.694171: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)\
+Epoch 1/4\
+1563/1563 [==============================] - 92s 59ms/step - loss: 0.0141 - val_loss: 0.0108\
+Epoch 2/4\
+1563/1563 [==============================] - 93s 59ms/step - loss: 0.0097 - val_loss: 0.0098\
+Epoch 3/4\
+1563/1563 [==============================] - 91s 58ms/step - loss: 0.0089 - val_loss: 0.0089\
+Epoch 4/4\
+1563/1563 [==============================] - 93s 60ms/step - loss: 0.0086 - val_loss: 0.0087\
+2021-11-15 01:00:06.371 python[23229:1553035] _TIPropertyValueIsValid called with 4 on nil context!\
+2021-11-15 01:00:06.371 python[23229:1553035] imkxpc_getApplicationProperty:reply: called with incorrect property value 4, bailing.\
+2021-11-15 01:00:06.371 python[23229:1553035] Text input context does not respond to _valueForTIProperty:\
+2021-11-15 01:00:06.372 python[23229:1553035] _TIPropertyValueIsValid called with 4 on nil context!\
+2021-11-15 01:00:06.372 python[23229:1553035] imkxpc_getApplicationProperty:reply: called with incorrect property value 4, bailing.\
+2021-11-15 01:00:06.373 python[23229:1553035] Text input context does not respond to _valueForTIProperty:\
+2021-11-15 01:00:06.378 python[23229:1553035] _TIPropertyValueIsValid called with 4 on nil context!\
+2021-11-15 01:00:06.378 python[23229:1553035] imkxpc_getApplicationProperty:reply: called with incorrect property value 4, bailing.\
+2021-11-15 01:00:06.378 python[23229:1553035] Text input context does not respond to _valueForTIProperty:\
+1563/1563 [==============================] - 23s 15ms/step - loss: 0.0087\
+total anomaly:  2918\
+anomaly percentage:  5.894949494949494}
